@@ -16,7 +16,6 @@ int* createArray(int size);
 void fillArray(int* array, int min, int max);
 void printArray(int* array);
 void sort(int* array, int descending);
-int* deleteArray(int* array);
 
 /* Main */
 
@@ -26,7 +25,8 @@ int main(void) {
 	/* Allocate array */
 	int* arr;
 	if ((arr = createArray(MAX)) == NULL) {
-		printf("There was an error creating the array. Leaving the program.\n");
+		printf("There was an error creating the array. ");
+		printf("Leaving the program.\n");
 		return 0;
 	}
 	printf("Array stored at %p.\n", arr);
@@ -34,7 +34,8 @@ int main(void) {
 	/* Fill array with random numbers between 1 and 99, inclusive */
 	int min = 1;
 	int max = 99;
-	printf("Filling array with random integers between %d and %d, inclusive,...\n", min, max);
+	printf("Filling array with random integers between ");
+	printf("%d and %d, inclusive,...\n", min, max);
 	fillArray(arr, min, max);
 
 	/* Display the array and the size of it */
@@ -47,11 +48,6 @@ int main(void) {
 	/* Sort the array from highest to lowest number, and display again */
 	sort(arr, 1);
 	printArray(arr);
-
-	/* Delete all integers in the array */
-	if ((arr = deleteArray(arr)) != NULL) {
-		printf("There was an error deleting the array. Exists at %p.", arr);
-	}
 
 	printf("Goodbye cruel world.\n\n");
 	return 0;
@@ -103,15 +99,4 @@ void sort(int* array, int descending) {
 					array[j+1] = temp;
 				}
 	}
-}
-
-
-
-int* deleteArray(int* array) {
-	int* head = array;
-
-	for (int i = 0; i < MAX; i++) {
-		free(&array[i]);
-	}
-	return head;
 }
