@@ -4,24 +4,35 @@ integer_array.c -- A demostration of array manipulation with integers.
 Written by Moths in the Machine, 2025-04-08
 */
 
+
 /* Preprocessor statements */
 
 #include <stdio.h> 
 #include <stdlib.h>
+#include <time.h>
 
-#define MAX 40
+#define MAX 10
+
 
 /* Function Prototypes */
+
 int* createArray(int size);
 void fillArray(int* array, int min, int max);
 void printArray(int* array);
-void sort(int* array, int descending);
+void bubbleSort(int* array, int descending);
+int linearSearchForInt(int* array, int val);
+
 
 /* Main */
 
 int main(void) {
 	printf("Hello Arrays with Integers.\n");
+
+
+	/* Change seed for random numbers */
+	srand(time(NULL));
 	
+
 	/* Allocate array */
 	int* arr;
 	if ((arr = createArray(MAX)) == NULL) {
@@ -31,6 +42,7 @@ int main(void) {
 	}
 	printf("Array stored at %p.\n", arr);
 
+
 	/* Fill array with random numbers between 1 and 99, inclusive */
 	int min = 1;
 	int max = 99;
@@ -38,17 +50,54 @@ int main(void) {
 	printf("%d and %d, inclusive,...\n", min, max);
 	fillArray(arr, min, max);
 
-	/* Display the array and the size of it */
+
+	/* Display the array's integers */
 	printArray(arr);
+
+
+	/* Search for an integer in the array (not found) */
+	int findMe = 100;
+	int pos = -1;
+	printf("Looking for integer %d in the array... ", findMe);
+	if ((pos = linearSearchForInt(arr, findMe)) == -1)
+		printf("The integer was not found.\n");
+	else
+		printf("The integer was found at position %d in the array.\n", pos);
+	
+
+	/* Search for an integer in the array (found) */
+	findMe = arr[(rand() % MAX)];
+	pos = -1;
+	printf("Looking for integer %d in the array... ", findMe);
+	if ((pos = linearSearchForInt(arr, findMe)) == -1)
+		printf("The integer was not found.\n");
+	else
+		printf("The integer was found at position %d in the array.\n", pos);	
+	
+
+	/* Search for an integer in the array (found or not found) */
+	findMe = (rand() % max) + min;
+	pos = -1;
+	printf("Looking for integer %d in the array... ", findMe);
+	if ((pos = linearSearchForInt(arr, findMe)) == -1)
+		printf("The integer was not found.\n");
+	else
+		printf("The integer was found at position %d in the array.\n", pos);
+
 
 	/* Sort the array from lowest to highest number, and display again */
-	sort(arr, 0);
+	printf("Sorting the array from lowest to highest number...\n");
+	bubbleSort(arr, 0);
 	printArray(arr);
+
 
 	/* Sort the array from highest to lowest number, and display again */
-	sort(arr, 1);
+	printf("Sorting the array from highest to lowest number...\n");
+	bubbleSort(arr, 1);
 	printArray(arr);
+	
 
+	/* End program */
 	printf("Goodbye cruel world.\n\n");
 	return 0;
 }
@@ -61,12 +110,14 @@ int* createArray(int size) {
 	return ptr;
 }
 
+
 void fillArray(int* array, int min, int max) {
 	for (int i = 0; i < MAX-1; i++) {
 		int val = (rand() % max) + min;
 		array[i] = val;
 	}
 }
+
 
 void printArray(int* array) {
 	printf("{ ");
@@ -76,7 +127,8 @@ void printArray(int* array) {
 	printf("}\n");
 }
 
-void sort(int* array, int descending) {
+
+void bubbleSort(int* array, int descending) {
 	/* Use bubble sort algorithm */
 	if (descending) {
 		/* Descending order */
@@ -99,4 +151,24 @@ void sort(int* array, int descending) {
 					array[j+1] = temp;
 				}
 	}
+}
+
+
+int linearSearchForInt(int* array, int val) {
+	int count = 0;
+	int pos = -1;
+	for (int i = 0; i < MAX-1; i++) {
+		count++;
+		if (array[i] == val) {
+			pos = i;
+			break;
+		}
+	}
+	printf("(%d comparisons) ", count);
+	return pos;
+}
+
+
+int binarySearchForInt(int* array, int val) {
+	return -1;
 }
