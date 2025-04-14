@@ -19,7 +19,8 @@ Written by Moths in the Machine, 2025-04-08
 int* createArray(int size);
 void fillArray(int* array, int min, int max);
 void printArray(int* array);
-void bubbleSort(int* array, int descending);
+void bubbleSortDescending(int* array);
+void bubbleSortAscending(int* array);
 int linearSearchForInt(int* array, int val);
 
 
@@ -87,13 +88,13 @@ int main(void) {
 
 	/* Sort the array from lowest to highest number, and display again */
 	printf("Sorting the array from lowest to highest number...\n");
-	bubbleSort(arr, 0);
+	bubbleSortAscending(arr);
 	printArray(arr);
 
 
 	/* Sort the array from highest to lowest number, and display again */
 	printf("Sorting the array from highest to lowest number...\n");
-	bubbleSort(arr, 1);
+	bubbleSortDescending(arr);
 	printArray(arr);
 	
 
@@ -112,7 +113,7 @@ int* createArray(int size) {
 
 
 void fillArray(int* array, int min, int max) {
-	for (int i = 0; i < MAX-1; i++) {
+	for (int i = 0; i < MAX; i++) {
 		int val = (rand() % max) + min;
 		array[i] = val;
 	}
@@ -121,35 +122,35 @@ void fillArray(int* array, int min, int max) {
 
 void printArray(int* array) {
 	printf("{ ");
-	for (int i = 0; i < MAX-1; i++) {
+	for (int i = 0; i < MAX; i++) {
 		printf("%2d ", array[i]);
 	}
 	printf("}\n");
 }
 
 
-void bubbleSort(int* array, int descending) {
-	/* Use bubble sort algorithm */
-	if (descending) {
-		/* Descending order */
-		for (int i = 0; i < MAX-1; i++)
-			for (int j = 0; j < MAX-1-i; j++)
-				if (array[j] < array[j+1])
-				{
-					int temp = array[j];
-					array[j] = array[j+1];
-					array[j+1] = temp;
-				}
-	} else {
-		/* Ascending order */
-		for (int i = 0; i < MAX-1; i++)
-			for (int j = 0; j < MAX-1-i; j++) 
-				if (array[j] > array[j+1])
-				{
-					int temp = array[j];
-					array[j] = array[j+1];
-					array[j+1] = temp;
-				}
+void bubbleSortDescending(int* array) {
+	for (int i = 0; i < MAX-1; i++) {
+		for (int j = 0; j < MAX-1-i; j++) {
+			if (array[j] < array[j+1]) {
+				int temp = array[j+1];
+				array[j+1] = array[j];
+				array[j] = temp;
+			}
+		}
+	}
+}
+
+
+void bubbleSortAscending(int* array) {
+	for (int i = 0; i < MAX-1; i++) {
+		for (int j = 0; j < MAX-1-i; j++) {
+			if (array[j] > array[j+1]) {
+				int temp = array[j+1];
+				array[j+1] = array[j];
+				array[j] = temp;
+			}
+		}
 	}
 }
 
