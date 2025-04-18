@@ -7,6 +7,6 @@ Modified: 2025-04-17
 using namespace std;
 
 int main(void) {
-cout << "Hello world." << endl;
-return 0;
+	cout << "Hello world." << endl;
+	return 0;
 }   
